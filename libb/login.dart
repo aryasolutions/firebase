@@ -1,66 +1,47 @@
+import 'package:firebase/register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-class Registration extends StatefulWidget {
-  const Registration({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
-  _RegistrationState createState() => _RegistrationState();
+  _LoginState createState() => _LoginState();
 }
 
-class _RegistrationState extends State<Registration> {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    final TextEditingController usernamecontroller = TextEditingController();
     final TextEditingController useremailcontroller = TextEditingController();
-    final TextEditingController userpasswordcontroller = TextEditingController();
+    final TextEditingController userpasswordcontroller =
+        TextEditingController();
     void register() async {
       FirebaseAuth auth = FirebaseAuth.instance;
       FirebaseFirestore firestore = FirebaseFirestore.instance;
 
       // print("objectobjectobjectobjectobjectobjectobjectobjectobject");
-      final String username = usernamecontroller.text;
       final String useremail = useremailcontroller.text;
       final String userpassword = userpasswordcontroller.text;
       try {
-        final UserCredential user = await auth.createUserWithEmailAndPassword(
+        final UserCredential user = await auth.signInWithEmailAndPassword(
             email: useremail, password: userpassword);
-        await firestore.collection("users").doc(user.user.uid).set({
-          "username": username,
-          "email": useremail,
-          "password": userpassword
-        });
-        Navigator.pushNamed(context, '/Home');
+        final DocumentSnapshot snapshot =
+            await firestore.collection("users").doc(user.user.uid).get();
+        final data = snapshot.data();
+        print("User is Login");
+        print("Name =====> ${data["username"]}");
+        print("Email =====> ${data["email"]}");
       } catch (e) {
         print("Error ==============>$e");
-        Widget okButton = TextButton(
-          child: Text("OK"),
-          onPressed: () {
-            Navigator.of(context).pop(); // dismiss dialog
-          },
-        );
-        AlertDialog alert = AlertDialog(
-          title: Center(child: Text("Error")),
-          content: Text("$e"),
-          actions: [
-            okButton,
-          ],
-        );
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return alert;
-          },
-        );
       }
+      Navigator.pushNamed(context, '/Home');
       // print([username, useremail, userpassword]);
     }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/signup',
+      initialRoute: '/login',
       title: 'Arya Solutions',
       home: Scaffold(
         // appBar: AppBar(
@@ -96,13 +77,6 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SizedBox(height: 30),
                           TextField(
-                            controller: usernamecontroller,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: "Username"),
-                          ),
-                          SizedBox(height: 15),
-                          TextField(
                             controller: useremailcontroller,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(),
@@ -126,36 +100,29 @@ class _RegistrationState extends State<Registration> {
                                   )),
                             ],
                           ),
-                          // SizedBox(height: 10),
+                          SizedBox(height: 10),
                           FlatButton(
-                            onPressed: register,
                             child: Text(
-                              'Registration',
+                              'LogIn',
                               // style: TextStyle(fontSize: 10.0),
                             ),
                             color: Colors.blueAccent,
                             textColor: Colors.white,
+                            onPressed: register,
                           ),
-                              SignInButton(
-                                Buttons.Google,
-                                onPressed: () {},
-                              ),
-                               SignInButton(
-                                Buttons.Facebook,
-                                onPressed: () {},
-                              ),
-                          // SizedBox(height: 20),
+                          SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/');
+                                    Navigator.pushNamed(
+                                        context, '/Registration');
                                   },
                                   child: Text(
-                                    "I have an account? Login",
+                                    "Don't have an account? Sign up",
                                     style: TextStyle(
-                                        fontSize: 12.0,
+                                        fontSize: 10.0,
                                         fontWeight: FontWeight.bold),
                                   )),
                             ],

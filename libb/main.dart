@@ -30,8 +30,7 @@ class MyApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           // return Registration();
           return MaterialApp(
-          debugShowCheckedModeBanner: false,
-            title: 'Named Routes Demo',
+            // title: 'Named Routes Demo',
             // Start the app with the "/" named route. In this case, the app starts
             // on the FirstScreen widget.
             initialRoute: '/',
@@ -43,6 +42,7 @@ class MyApp extends StatelessWidget {
               '/Home': (context) => Home(),
             },
           );
+                  // return Login();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete

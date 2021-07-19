@@ -1,6 +1,10 @@
+import 'package:firebase/control/googleauth.dart';
+import 'package:firebase/register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -34,11 +38,17 @@ class _LoginState extends State<Login> {
       } catch (e) {
         print("Error ==============>$e");
       }
+      Navigator.pushNamed(context, '/Home');
       // print([username, useremail, userpassword]);
+    }
+
+    void connectweithGoogle() {
+      print("object");
     }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: '/login',
       title: 'Arya Solutions',
       home: Scaffold(
         // appBar: AppBar(
@@ -47,7 +57,7 @@ class _LoginState extends State<Login> {
         // ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(138.0),
+            padding: const EdgeInsets.all(68.0),
             child: Column(
               children: [
                 SizedBox(height: 20),
@@ -60,11 +70,11 @@ class _LoginState extends State<Login> {
                         bottomRight: const Radius.circular(40.0),
                         bottomLeft: const Radius.circular(40.0),
                       )),
-                  width: 330,
-                  height: 400,
+                  width: 360,
+                  // height: 400,
                   child: Center(
                     child: Container(
-                      width: 280,
+                      width: 300,
                       child: Column(
                         children: [
                           SizedBox(height: 30),
@@ -97,7 +107,7 @@ class _LoginState extends State<Login> {
                                   )),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          // SizedBox(height: 10),
                           FlatButton(
                             child: Text(
                               'LogIn',
@@ -107,16 +117,30 @@ class _LoginState extends State<Login> {
                             textColor: Colors.white,
                             onPressed: register,
                           ),
-                          SizedBox(height: 20),
+                          // SizedBox(height: 5),
+                          SignInButton(
+                            Buttons.Google,
+                            onPressed: () {
+                              signInWithGoogle(context);
+                            },
+                          ),
+                          SignInButton(
+                            Buttons.Facebook,
+                            onPressed: () {},
+                          ),
+                          // SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, '/Registration');
+                                  },
                                   child: Text(
                                     "Don't have an account? Sign up",
                                     style: TextStyle(
-                                        fontSize: 10.0,
+                                        fontSize: 12.0,
                                         fontWeight: FontWeight.bold),
                                   )),
                             ],

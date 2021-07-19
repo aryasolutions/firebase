@@ -1,6 +1,7 @@
 # firebase
 
 A new Flutter project.
+flutter run --no-sound-null-safety
 
 ## Getting Started
 
