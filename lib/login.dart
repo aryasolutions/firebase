@@ -1,3 +1,5 @@
+import 'package:firebase/Home.dart';
+import 'package:firebase/control/facebook_auth.dart';
 import 'package:firebase/control/googleauth.dart';
 import 'package:firebase/register.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +39,33 @@ class _LoginState extends State<Login> {
         print("Email =====> ${data["email"]}");
       } catch (e) {
         print("Error ==============>$e");
+                Widget okButton = TextButton(
+          child: Text("OK"),
+          onPressed: () {
+            Navigator.of(context).pop(); // dismiss dialog
+          },
+        );
+        AlertDialog alert = AlertDialog(
+          title: Center(child: Text("Error")),
+          content: Text("$e"),
+          actions: [
+            okButton,
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
       }
-      Navigator.pushNamed(context, '/Home');
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
+      // Navigator.pushNamed(context, '/Home');
       // print([username, useremail, userpassword]);
     }
 
@@ -48,7 +75,6 @@ class _LoginState extends State<Login> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
       title: 'Arya Solutions',
       home: Scaffold(
         // appBar: AppBar(
@@ -126,7 +152,9 @@ class _LoginState extends State<Login> {
                           ),
                           SignInButton(
                             Buttons.Facebook,
-                            onPressed: () {},
+                            onPressed: () {
+                              facebook_auth(context);
+                            },
                           ),
                           // SizedBox(height: 10),
                           Row(
@@ -134,8 +162,14 @@ class _LoginState extends State<Login> {
                             children: [
                               TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, '/Registration');
+                                    Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Registration(),
+          ),
+        );
+                                    // Navigator.pushNamed(
+                                    //     context, '/Registration');
                                   },
                                   child: Text(
                                     "Don't have an account? Sign up",

@@ -1,7 +1,11 @@
 # firebase
 
 A new Flutter project.
+
 flutter run --no-sound-null-safety
+
+keytool -exportcert -alias androiddebugkey -keystore "C:\Users\mudas\.android\debug.keystore" | "C:\openssl-0.9.8k_WIN32\bin\openssl" sha1 -binary | "C:\openssl-0.9.8k_WIN32\bin\openssl" base64
+      
 
 ## Getting Started
 

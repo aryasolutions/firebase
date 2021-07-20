@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/Home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,34 @@ Future signInWithGoogle(BuildContext context) async {
         }
       });
       print(userData);
-      Navigator.pushNamed(context, '/Home');
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
+      // Navigator.pushNamed(context, '/Home');
     } else {}
   } catch (e) {
     print("Error ==============>$e");
+            Widget okButton = TextButton(
+          child: Text("OK"),
+          onPressed: () {
+            Navigator.of(context).pop(); // dismiss dialog
+          },
+        );
+        AlertDialog alert = AlertDialog(
+          title: Center(child: Text("Error")),
+          content: Text("$e"),
+          actions: [
+            okButton,
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
   }
 }

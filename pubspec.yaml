@@ -28,6 +28,10 @@ dependencies:
   cloud_firestore: "^0.16.0+1"
   flutter_signin_button: ^2.0.0
   google_sign_in: "^4.5.1"
+  flutter_facebook_auth: "^1.0.0"
+  flutter_facebook_login: ^1.1.1
+  http: ^0.12.0
+
 
 
 

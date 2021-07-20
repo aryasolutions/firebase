@@ -1,10 +1,6 @@
-import 'package:firebase/control/facebook_auth.dart';
-import 'package:firebase/control/googleauth.dart';
-import 'package:firebase/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class Registration extends StatefulWidget {
   const Registration({Key? key}) : super(key: key);
@@ -36,35 +32,19 @@ class _RegistrationState extends State<Registration> {
           "email": useremail,
           "password": userpassword
         });
-        Navigator.pushNamed(context, '/Home');
+        print("User is Registered");
+        print("User is Registered");
+        print("User is Registered");
+        print("User is Registered");
       } catch (e) {
         print("Error ==============>$e");
-        Widget okButton = TextButton(
-          child: Text("OK"),
-          onPressed: () {
-            Navigator.of(context).pop(); // dismiss dialog
-          },
-        );
-        AlertDialog alert = AlertDialog(
-          title: Center(child: Text("Error")),
-          content: Text("$e"),
-          actions: [
-            okButton,
-          ],
-        );
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return alert;
-          },
-        );
       }
       // print([username, useremail, userpassword]);
     }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/signup',
+        initialRoute: '/signup',
       title: 'Arya Solutions',
       home: Scaffold(
         // appBar: AppBar(
@@ -132,25 +112,13 @@ class _RegistrationState extends State<Registration> {
                           ),
                           // SizedBox(height: 10),
                           FlatButton(
-                            onPressed: register,
                             child: Text(
                               'Registration',
                               // style: TextStyle(fontSize: 10.0),
                             ),
                             color: Colors.blueAccent,
                             textColor: Colors.white,
-                          ),
-                          SignInButton(
-                            Buttons.Google,
-                            onPressed: () {
-                              signInWithGoogle(context);
-                            },
-                          ),
-                          SignInButton(
-                            Buttons.Facebook,
-                            onPressed: () {
-                              facebook_auth(context);
-                            },
+                            onPressed: register,
                           ),
                           // SizedBox(height: 20),
                           Row(
@@ -158,18 +126,12 @@ class _RegistrationState extends State<Registration> {
                             children: [
                               TextButton(
                                   onPressed: () {
-                                    Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Login(),
-          ),
-        );
-                                    // Navigator.pushNamed(context, '/');
+                                    Navigator.pushNamed(context, '/');
                                   },
                                   child: Text(
-                                    "I have an account? Login",
+                                    "Don't have an account? Sign up",
                                     style: TextStyle(
-                                        fontSize: 12.0,
+                                        fontSize: 10.0,
                                         fontWeight: FontWeight.bold),
                                   )),
                             ],
