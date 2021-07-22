@@ -1,0 +1,27 @@
+{ 
+  data: 
+  { 
+    height: 50, 
+    is_silhouette: false, 
+    url: https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=118234993855802&height=50&width=50&ext=1629542008&hash=AeTo0IniSRgoQ89Ifv8, 
+    width: 50
+    }
+  }
+
+
+data[url]
+
+{
+  username: Mudassir Mukhtar,
+  provider: Facebook, 
+  email: 2019cs642@student.uet.edu.pk, 
+  User id: 118234993855802, 
+  Token: EAAH5KpZBkbj8BANqqNIJWhQPOSPawpKeZCPEox10vmLwLRkIthqdZBrTdhOzHiZAPOFHBv85uhNQwkEABakY0rtZC3L2IZAdvZAAE4ZCg1HZBSA8PhZByr5Rmwe0bwqSVA72btZCt9MxBvXzljtV57ts3LAQqWbtVKpWYO7T8AWPRfjX981pHx34Qb9CrpdcTPA3vV7x5UZCJDDHxaM9fwNtBSx9D1dBGwlMukDZAl78ZA9p0ZAGgZDZD,
+  photoUrl: 
+    {data: 
+      {height: 50, 
+      is_silhouette: false, 
+      url: https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=118234993855802&height=50&width=50&ext=1629542731&hash=AeQ3gLyRpWPvbsTN3eM, 
+      width: 50}
+    }
+}

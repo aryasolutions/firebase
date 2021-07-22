@@ -17,22 +17,22 @@ facebook_auth(context) async {
   switch (result.status) {
     case FacebookLoginStatus.loggedIn:
       final FacebookAccessToken accessToken = result.accessToken;
-      // print('''
-      //    Logged in!===========================================================================================>
+      print('''
+         Logged in!===========================================================================================>
          
-      //    Token: ${accessToken.token}
-      //    User id: ${accessToken.userId}
-      //    Expires: ${accessToken.expires}
-      //    Permissions: ${accessToken.permissions}
-      //    Declined permissions: ${accessToken.declinedPermissions}
-      //    ''');
+         Token: ${accessToken.token}
+         User id: ${accessToken.userId}
+         Expires: ${accessToken.expires}
+         Permissions: ${accessToken.permissions}
+         Declined permissions: ${accessToken.declinedPermissions}
+         ''');
       final String token = result.accessToken.token;
       final response = await http.get(
           'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,picture&access_token=${token}');
       final profile = jsonDecode(response.body);
-        //       print('==========================================================================');
-        // print(profile);
-        // print('==========================================================================');
+      //       print('==========================================================================');
+      // print(profile);
+      // print('==========================================================================');
       var userData = {
         'username': profile["name"],
         'provider': 'Facebook',
@@ -41,10 +41,16 @@ facebook_auth(context) async {
         'Token': accessToken.token,
         'photoUrl': profile["picture"],
       };
-        print('==========================================================================');
-        print(userData);
-        print('==========================================================================');
-      final FirebaseAuth auth = FirebaseAuth.instance;
+      print(
+          '=================================facekook Data=========================================');
+      // print(profile['picture.data.url']);
+      // print(userData['photoUrl']['data']['url']);
+      // var photoUrlR = userData['photoUrl'];
+      // print(photoUrlR['data']['url']);
+
+      print(
+          '==========================================================================');
+      // final FirebaseAuth auth = FirebaseAuth.instance;
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
       users.doc(accessToken.userId).get().then((doc) {
@@ -54,12 +60,18 @@ facebook_auth(context) async {
           users.doc(accessToken.userId).set(userData);
         }
       });
-              Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home(),
-          ),
-        );
+      Navigator.pushReplacementNamed(context, '/Home', arguments: {
+        'Name': userData["username"],
+        'Email': userData["email"],
+        'Profile': userData['photoUrl']['data']['url']
+      });
+
+      //       Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => Home(),
+      //   ),
+      // );
       // Navigator.pushNamed(context, '/Home');
 
       break;
@@ -71,25 +83,25 @@ facebook_auth(context) async {
       // print(
       //     'Error=====================================>Something went wrong with the login process.\n'
       //     'Here\'s the error Facebook gave us:====> ${result.errorMessage}');
-              Widget okButton = TextButton(
-          child: Text("OK"),
-          onPressed: () {
-            Navigator.of(context).pop(); // dismiss dialog
-          },
-        );
-        AlertDialog alert = AlertDialog(
-          title: Center(child: Text("Error")),
-          content: Text("${result.errorMessage}"),
-          actions: [
-            okButton,
-          ],
-        );
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return alert;
-          },
-        );
+      Widget okButton = TextButton(
+        child: Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop(); // dismiss dialog
+        },
+      );
+      AlertDialog alert = AlertDialog(
+        title: Center(child: Text("Error")),
+        content: Text("${result.errorMessage}"),
+        actions: [
+          okButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
       break;
   }
 }

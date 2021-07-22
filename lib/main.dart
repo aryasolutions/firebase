@@ -1,4 +1,5 @@
 import 'package:firebase/Home.dart';
+import 'package:firebase/control/Navigation.dart';
 import 'package:firebase/login.dart';
 import 'package:firebase/register.dart';
 import 'package:flutter/material.dart';
@@ -28,21 +29,21 @@ class MyApp extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          // return Registration();
-          return MaterialApp(
-          debugShowCheckedModeBanner: false,
-            title: 'Named Routes Demo',
-            // Start the app with the "/" named route. In this case, the app starts
-            // on the FirstScreen widget.
-            initialRoute: '/',
-            routes: {
-              // When navigating to the "/" route, build the FirstScreen widget.
-              '/': (context) => Login(),
-              // When navigating to the "/second" route, build the SecondScreen widget.
-              '/Registration': (context) => Registration(),
-              '/Home': (context) => Home(),
-            },
-          );
+          return Navigation();
+          // return MaterialApp(
+          // debugShowCheckedModeBanner: false,
+          //   title: 'Named Routes Demo',
+          //   // Start the app with the "/" named route. In this case, the app starts
+          //   // on the FirstScreen widget.
+          //   initialRoute: '/',
+          //   routes: {
+          //     // When navigating to the "/" route, build the FirstScreen widget.
+          //     '/': (context) => Login(),
+          //     // When navigating to the "/second" route, build the SecondScreen widget.
+          //     '/Registration': (context) => Registration(),
+          //     '/Home': (context) => Home(),
+          //   },
+          // );
         }
 
         // Otherwise, show something whilst waiting for initialization to complete

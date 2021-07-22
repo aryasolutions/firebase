@@ -36,12 +36,18 @@ Future signInWithGoogle(BuildContext context) async {
         }
       });
       print(userData);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home(),
-          ),
-        );
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => Home(),
+      //     ),
+      //   );
+            Navigator.pushReplacementNamed(context, '/Home',
+          arguments: {
+            'Name': userData["username"],
+            'Email': userData["email"],
+            'Profile': userData["photoUrl"]
+            });
       // Navigator.pushNamed(context, '/Home');
     } else {}
   } catch (e) {

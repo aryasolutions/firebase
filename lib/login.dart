@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase/Home.dart';
 import 'package:firebase/control/facebook_auth.dart';
 import 'package:firebase/control/googleauth.dart';
@@ -16,63 +18,85 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final TextEditingController useremailcontroller = TextEditingController();
+  final TextEditingController userpasswordcontroller = TextEditingController();
+  void register() async {
+    Map UserData = {};
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // print("objectobjectobjectobjectobjectobjectobjectobjectobject");
+    final String useremail = useremailcontroller.text;
+    final String userpassword = userpasswordcontroller.text;
+    try {
+      final UserCredential user = await auth.signInWithEmailAndPassword(
+          email: useremail, password: userpassword);
+      final DocumentSnapshot snapshot =
+          await firestore.collection("users").doc(user.user.uid).get();
+      final data = snapshot.data();
+      setState(() {
+        UserData = data;
+      });
+          print('=========================User is Login...=============================');
+
+      print("Name =====> ${UserData["username"]}");
+      print("Email =====> ${UserData["email"]}");
+
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => Home(),
+      //   ),
+      // );
+      Navigator.pushReplacementNamed(context, '/Home',
+          arguments: {
+            'Name': UserData["username"],
+            'Email': UserData["email"]
+            });
+      // print([username, useremail, userpassword]);
+
+    } catch (e) {
+      print("Error ==============>$e");
+      Widget okButton = TextButton(
+        child: Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop(); // dismiss dialog
+        },
+      );
+      AlertDialog alert = AlertDialog(
+        title: Center(child: Text("Error")),
+        content: Text("$e"),
+        actions: [
+          okButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => Home(),
+    //   ),
+    // );
+    // Navigator.pushReplacementNamed(context, '/Home',arguments:{
+    //   'UserData' :
+    // });
+    // print([username, useremail, userpassword]);
+  }
+
+  @override
+  void initstate() {
+    super.initState();
+    register();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController useremailcontroller = TextEditingController();
-    final TextEditingController userpasswordcontroller =
-        TextEditingController();
-    void register() async {
-      FirebaseAuth auth = FirebaseAuth.instance;
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-      // print("objectobjectobjectobjectobjectobjectobjectobjectobject");
-      final String useremail = useremailcontroller.text;
-      final String userpassword = userpasswordcontroller.text;
-      try {
-        final UserCredential user = await auth.signInWithEmailAndPassword(
-            email: useremail, password: userpassword);
-        final DocumentSnapshot snapshot =
-            await firestore.collection("users").doc(user.user.uid).get();
-        final data = snapshot.data();
-        print("User is Login");
-        print("Name =====> ${data["username"]}");
-        print("Email =====> ${data["email"]}");
-      } catch (e) {
-        print("Error ==============>$e");
-                Widget okButton = TextButton(
-          child: Text("OK"),
-          onPressed: () {
-            Navigator.of(context).pop(); // dismiss dialog
-          },
-        );
-        AlertDialog alert = AlertDialog(
-          title: Center(child: Text("Error")),
-          content: Text("$e"),
-          actions: [
-            okButton,
-          ],
-        );
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return alert;
-          },
-        );
-      }
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home(),
-          ),
-        );
-      // Navigator.pushNamed(context, '/Home');
-      // print([username, useremail, userpassword]);
-    }
-
-    void connectweithGoogle() {
-      print("object");
-    }
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Arya Solutions',
@@ -163,11 +187,11 @@ class _LoginState extends State<Login> {
                               TextButton(
                                   onPressed: () {
                                     Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Registration(),
-          ),
-        );
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Registration(),
+                                      ),
+                                    );
                                     // Navigator.pushNamed(
                                     //     context, '/Registration');
                                   },
