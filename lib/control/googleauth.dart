@@ -46,7 +46,8 @@ Future signInWithGoogle(BuildContext context) async {
           arguments: {
             'Name': userData["username"],
             'Email': userData["email"],
-            'Profile': userData["photoUrl"]
+            'Profile': userData["photoUrl"],
+            'provider': userData["provider"],
             });
       // Navigator.pushNamed(context, '/Home');
     } else {}
@@ -73,3 +74,5 @@ Future signInWithGoogle(BuildContext context) async {
         );
   }
 }
+
+

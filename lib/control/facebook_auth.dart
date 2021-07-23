@@ -63,7 +63,8 @@ facebook_auth(context) async {
       Navigator.pushReplacementNamed(context, '/Home', arguments: {
         'Name': userData["username"],
         'Email': userData["email"],
-        'Profile': userData['photoUrl']['data']['url']
+        'Profile': userData['photoUrl']['data']['url'],
+        'provider': userData["provider"],
       });
 
       //       Navigator.push(
